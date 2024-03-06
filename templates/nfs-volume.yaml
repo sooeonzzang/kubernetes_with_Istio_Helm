@@ -1,0 +1,157 @@
+{{ if .Values.volume.nfs.use }}
+# persistentvolume 
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  user-pv
+  labels:
+    db: user
+spec:
+  capacity:
+    storage: 3Gi
+  volumeMode: Filesystem
+  accessModes: 
+  - ReadWriteMany
+  nfs:
+    path: "/data/mysql-user"
+    server: {{ .Values.volume.nfs.ip }}
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  product-pv
+  labels:
+    db: product
+spec:
+  capacity:
+    storage: 3Gi
+  volumeMode: Filesystem
+  accessModes: 
+  - ReadWriteMany
+  nfs:
+    path: "/data/mysql-product"
+    server: {{ .Values.volume.nfs.ip }}
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  order-pv
+  labels:
+    db: order
+spec:
+  capacity:
+    storage: 3Gi
+  volumeMode: Filesystem
+  accessModes: 
+  - ReadWriteMany
+  nfs:
+    path: "/data/mysql-order"
+    server: {{ .Values.volume.nfs.ip }}
+
+---
+
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name:  cart-pv
+  labels:
+    db: cart
+spec:
+  capacity:
+    storage: 3Gi
+  volumeMode: Filesystem
+  accessModes: 
+  - ReadWriteMany
+  nfs:
+    path: "/data/mongo-cart"
+    server: {{ .Values.volume.nfs.ip }}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nf-rating-pv
+  labels:
+    db: rating
+spec:
+  capacity:
+    storage: 3Gi
+  volumeMode: Filesystem
+  accessModes: 
+  - ReadWriteMany
+  nfs:
+    path: "/data/mongo-rating"
+    server: {{ .Values.volume.nfs.ip }}
+---
+# persistentVolumeClaim
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name:  user-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  selector: 
+    matchLabels: 
+      db: user
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name:  product-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  selector: 
+    matchLabels: 
+      db: product
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name:  order-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  selector: 
+    matchLabels: 
+      db: order
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name:  cart-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  selector: 
+    matchLabels: 
+      db: cart
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name:  rating-pvc
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  selector: 
+    matchLabels: 
+      db: rating
+{{ end }}
