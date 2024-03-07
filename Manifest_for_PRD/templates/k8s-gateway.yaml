@@ -24,6 +24,9 @@ spec:
   parentRefs:
   - name: k8s-gateway
   rules:
+
+  ## for api gateway ##
+
   # user-service
   - matches:
     - path:
@@ -78,6 +81,52 @@ spec:
     - name: rating-service
       port: 8080
 
+  ## for dark release ( header base routing) 
+
+  # order-admin
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /admin/order
+    filters:
+    - type: RequestHeaderModifier
+      requestHeaderModifier:
+        add:
+        - name: sooeon
+          value: zzang
+    backendRefs:
+    - name: order-service
+      port: 8080
+  
+  # product-admin
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /admin/item
+    filters:
+    - type: RequestHeaderModifier
+      requestHeaderModifier:
+        add:
+        - name: sooeon
+          value: zzang
+    backendRefs:
+    - name: product-service
+      port: 8080
+  
+  # user-admin
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /admin/user
+    filters:
+    - type: RequestHeaderModifier
+      requestHeaderModifier:
+        add:
+        - name: sooeon
+          value: zzang
+    backendRefs:
+    - name: user-service
+      port: 8080
 
 
 

@@ -81,13 +81,13 @@ spec:
         ports:
         - containerPort: 3306
           name: mysql
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-      volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName:  user-pvc
+      #   volumeMounts:
+      #   - name: mysql-persistent-storage
+      #     mountPath: /var/lib/mysql
+      # volumes:
+      # - name: mysql-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName:  user-pvc
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -112,13 +112,13 @@ spec:
         ports:
         - containerPort: 3306
           name: mysql
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-      volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName:  product-pvc
+      #   volumeMounts:
+      #   - name: mysql-persistent-storage
+      #     mountPath: /var/lib/mysql
+      # volumes:
+      # - name: mysql-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName:  product-pvc
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -143,13 +143,13 @@ spec:
         ports:
         - containerPort: 3306
           name: mysql
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-      volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName:  order-pvc
+      #   volumeMounts:
+      #   - name: mysql-persistent-storage
+      #     mountPath: /var/lib/mysql
+      # volumes:
+      # - name: mysql-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName:  order-pvc
 
 
 ---
@@ -176,13 +176,13 @@ spec:
         ports:
         - containerPort: 27017
           name: mongodb
-        volumeMounts:
-        - name: mongo-persistent-storage
-          mountPath: /data/db
-      volumes:
-      - name: mongo-persistent-storage
-        persistentVolumeClaim:
-          claimName:  cart-pvc
+      #   volumeMounts:
+      #   - name: mongo-persistent-storage
+      #     mountPath: /data/db
+      # volumes:
+      # - name: mongo-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName:  cart-pvc
 
 ---
 apiVersion: apps/v1
@@ -208,10 +208,10 @@ spec:
         ports:
         - containerPort: 27017
           name: mongodb
-        volumeMounts:
-        - name: mongo-persistent-storage
-          mountPath: /data/db
-      volumes:
-      - name: mongo-persistent-storage
-        persistentVolumeClaim:
-          claimName:  rating-pvc
+      #   volumeMounts:
+      #   - name: mongo-persistent-storage
+      #     mountPath: /data/db
+      # volumes:
+      # - name: mongo-persistent-storage
+      #   persistentVolumeClaim:
+      #     claimName:  rating-pvc
