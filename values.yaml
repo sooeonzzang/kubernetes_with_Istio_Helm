@@ -71,5 +71,5 @@ volume:
     ip: 10.0.2.116
 
   storageClass: 
-    use: true
+    use: false
     name: "nfs-client"
