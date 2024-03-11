@@ -7,7 +7,7 @@ app:
   frontend:
     replicaCount: 1
   user:
-    replicaCount: 2
+    replicaCount: 1
   product:
     replicaCount: 1
   order:

@@ -1,0 +1,27 @@
+# ---
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   creationTimestamp: null
+#   labels:
+#     app: loadtester
+#   name: loadtester
+# spec:
+# #{{ .Values.loadtester.replicas }}
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: loadtester
+#   strategy: {}
+#   template:
+#     metadata:
+#       creationTimestamp: null
+#       labels:
+#         app: loadtester
+#     spec:
+#       containers:
+#       - image: {{ .Values.image.repository }}/loadtester:{{ .Values.image.tag }}
+#         name: loadtester
+#         resources: {}
+# status: {}
+
