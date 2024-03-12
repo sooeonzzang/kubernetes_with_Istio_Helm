@@ -62,26 +62,6 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: product
   namespace: default
-  annotations:
-    metric-config.object.istio-requests-total.prometheus/per-replica: "true"
-    metric-config.object.istio-requests-total.prometheus/query: |
-      sum(
-          rate(
-              istio_requests_total{
-                destination_workload="product",
-                destination_workload_namespace="default",
-                reporter="destination"
-              }[1m]
-          )
-      ) /
-      count(
-        count(
-          container_memory_usage_bytes{
-            namespace="default",
-          pod=~"product.*"
-          }
-        ) by (pod)
-      )
 spec:
   maxReplicas: {{ .Values.hpa.product.maxReplicas }}
   minReplicas: {{ .Values.hpa.product.minReplicas }}
@@ -89,15 +69,29 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: product
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60 # intentionally using a small value. default: 300
   metrics:
-    - type: Object
-      object:
-        metric:
-          name: istio-requests-total
-        describedObject:
-          apiVersion: v1
-          kind: Pod
-          name: product
-        target:
-          type: Value
-          value: {{ .Values.hpa.product.targetValue }}
+  - type: Object
+    object:
+      describedObject:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: product
+      metric:
+        name: requests_per_second
+      target:
+        type: AverageValue # divide metric value by the number of pods
+        averageValue: "50"
+  - type: Object
+    object:
+      describedObject:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: product
+      metric:
+        name: request_duration_seconds_90ile
+      target:
+        type: Value
+        value: 300m
