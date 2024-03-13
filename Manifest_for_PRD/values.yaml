@@ -7,7 +7,8 @@ app:
   frontend:
     replicaCount: 1
   user:
-    replicaCount: 1
+    # for user sticky session
+    replicaCount: 2
   product:
     replicaCount: 1
   order:
