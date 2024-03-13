@@ -80,18 +80,7 @@ spec:
         kind: Deployment
         name: product
       metric:
-        name: requests_per_second
-      target:
-        type: AverageValue # divide metric value by the number of pods
-        averageValue: "50"
-  - type: Object
-    object:
-      describedObject:
-        apiVersion: apps/v1
-        kind: Deployment
-        name: product
-      metric:
         name: request_duration_seconds_90ile
       target:
         type: Value
-        value: 300m
+        value: {{ .Values.hpa.product.targetValue }}

@@ -59,26 +59,6 @@ kind: HorizontalPodAutoscaler
 metadata:
   name: cart
   namespace: default
-  annotations:
-    metric-config.object.istio-requests-total.prometheus/per-replica: "true"
-    metric-config.object.istio-requests-total.prometheus/query: |
-      sum(
-          rate(
-              istio_requests_total{
-                destination_workload="cart",
-                destination_workload_namespace="default",
-                reporter="destination"
-              }[1m]
-          )
-      ) /
-      count(
-        count(
-          container_memory_usage_bytes{
-            namespace="default",
-          pod=~"cart.*"
-          }
-        ) by (pod)
-      )
 spec:
   maxReplicas: {{ .Values.hpa.cart.maxReplicas }}
   minReplicas: {{ .Values.hpa.cart.minReplicas }}
@@ -86,14 +66,17 @@ spec:
     apiVersion: apps/v1
     kind: Deployment
     name: cart
+  behavior:
+    scaleDown:
+      stabilizationWindowSeconds: 60 # intentionally using a small value. default: 300
   metrics:
     - type: Object
       object:
         metric:
-          name: istio-requests-total
+          name: request_duration_seconds_90ile
         describedObject:
-          apiVersion: v1
-          kind: Pod
+          apiVersion: apps/v1
+          kind: Deployment
           name: cart
         target:
           type: Value
