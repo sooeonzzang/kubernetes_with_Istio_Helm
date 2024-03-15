@@ -43,7 +43,7 @@ hpa:
     targetValue: 300m
   user:
     maxReplicas: 3
-    minReplicas: 1
+    minReplicas: 2
     targetValue: 300m
   product:
     maxReplicas: 3

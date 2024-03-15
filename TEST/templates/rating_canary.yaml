@@ -15,7 +15,6 @@ spec:
         app: rating
         version: canary
     spec:
-    #{{ .Values.image.repository }}
       containers:
       - name: rating-container
         image: tmdwn0704/rating-service:canary2
