@@ -50,7 +50,7 @@ spec:
       port: 80
       targetPort: 3000
   externalTrafficPolicy: Local
-  type: LoadBalancer
+  type: NodePort
 
 ---
 

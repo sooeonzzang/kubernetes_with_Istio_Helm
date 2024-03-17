@@ -51,6 +51,8 @@ spec:
       targetPort: 3000
   externalTrafficPolicy: Local
   type: LoadBalancer
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-eip-allocations: "43.203.24.203"
 
 ---
 

@@ -12,6 +12,9 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
+  
+  service:
+    type: NodePort
 
 ---
 
