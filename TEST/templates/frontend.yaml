@@ -18,7 +18,7 @@ spec:
       containers:
       #test93fixed {{ .Values.image.repository }}
       - name: frontend
-        image: {{ .Values.image.repository}}/frontend:{{ .Values.image.tag }}
+        image: {{ .Values.image.repository}}/frontend:v2 #{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: 3000
