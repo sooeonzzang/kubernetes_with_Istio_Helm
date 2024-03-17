@@ -1,3 +1,4 @@
+{{ if .Values.monitoring.canary.use }}
 # rating
 apiVersion: apps/v1
 kind: Deployment
@@ -14,7 +15,6 @@ spec:
         app: rating
         version: canary
     spec:
-    #{{ .Values.image.repository }}
       containers:
       - name: rating-container
         image: tmdwn0704/rating-service:canary2
@@ -74,3 +74,4 @@ spec:
     - labels:
         version: canary
       name: canary
+{{ end }}

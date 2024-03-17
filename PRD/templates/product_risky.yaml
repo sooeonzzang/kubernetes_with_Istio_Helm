@@ -1,3 +1,4 @@
+{{ if .Values.monitoring.circuitbreaking.use }}
 # risk version product circuit breaking
 apiVersion: apps/v1
 kind: Deployment
@@ -55,5 +56,5 @@ spec:
       consecutive5xxErrors: 5
       interval: 10s
       baseEjectionTime: 30s
-
+{{ end }}
  

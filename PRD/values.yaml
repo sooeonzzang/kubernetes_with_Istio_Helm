@@ -43,7 +43,7 @@ hpa:
     targetValue: 300m
   user:
     maxReplicas: 3
-    minReplicas: 1
+    minReplicas: 2
     targetValue: 300m
   product:
     maxReplicas: 3
@@ -62,15 +62,10 @@ hpa:
     minReplicas: 1
     targetValue: 300m
 
-loadtester:
-  replicas: 1
 
-
-volume:
-  nfs:
+monitoring:
+  circuitbreaking:
     use: false
-    ip: 10.0.2.116
 
-  storageClass: 
+  canary: 
     use: false
-    name: "nfs-client"
