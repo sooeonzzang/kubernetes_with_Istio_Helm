@@ -3,12 +3,12 @@ entries:
   Istio_k8sGateway_Shop:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2024-03-17T16:03:48.193243571+09:00"
+    created: "2024-03-17T09:59:57.764364548Z"
     description: A Helm chart for Kubernetes
-    digest: 4797b4fcf2791809aa33aebd3b5e0d02ea29dc81038e5ad10faa3e7a307be413
+    digest: 9a57e3f1a6b24a94fe7e486d2223fc3a49579f7bf10b53c6f31ace053f616cd7
     name: Istio_k8sGateway_Shop
     type: application
     urls:
     - Istio_k8sGateway_Shop-0.1.0.tgz
     version: 0.1.0
-generated: "2024-03-17T16:03:48.192328778+09:00"
+generated: "2024-03-17T09:59:57.760686726Z"

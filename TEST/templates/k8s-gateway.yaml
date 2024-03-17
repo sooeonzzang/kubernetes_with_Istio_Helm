@@ -6,7 +6,7 @@ spec:
   gatewayClassName: istio
   listeners:
   - name: default
-    hostname: "MSA.podo.shop"
+    hostname: "*.jjong.shop"
     port: 80
     protocol: HTTP
     name: http
