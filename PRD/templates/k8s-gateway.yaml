@@ -12,9 +12,9 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
-  
-  service:
-    type: NodePort
+  addresses:
+  - value: 192.0.2.0
+    type: IPAddress
 
 ---
 
