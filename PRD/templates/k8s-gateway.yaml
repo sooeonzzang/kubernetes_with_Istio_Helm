@@ -2,6 +2,8 @@ apiVersion: gateway.networking.k8s.io/v1beta1
 kind: Gateway
 metadata:
   name: k8s-gateway
+  annotations:
+    networking.istio.io/service-type: NodePort
 spec:
   gatewayClassName: istio
   listeners:
@@ -12,9 +14,6 @@ spec:
     allowedRoutes:
       namespaces:
         from: All
-  addresses:
-  - value: 192.0.2.0
-    type: IPAddress
 
 ---
 
