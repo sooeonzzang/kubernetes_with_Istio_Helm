@@ -48,11 +48,11 @@ hpa:
   product:
     maxReplicas: 3
     minReplicas: 1
-    targetValue: 100m
+    targetValue: 300m
   order:
     maxReplicas: 3
     minReplicas: 1
-    targetValue: 200m
+    targetValue: 300m
   cart:
     maxReplicas: 3
     minReplicas: 1

@@ -18,7 +18,7 @@ spec:
       containers:
       #test93fixed {{ .Values.image.repository }}
       - name: frontend
-        image: {{ .Values.image.repository}}/frontend:v2 #{{ .Values.image.tag }}
+        image: {{ .Values.image.repository}}/frontend:v1 #{{ .Values.image.tag }}
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
         - containerPort: 3000
@@ -49,10 +49,7 @@ spec:
     - name: http
       port: 80
       targetPort: 3000
-  externalTrafficPolicy: Local
-  type: LoadBalancer
-  annotations:
-    service.beta.kubernetes.io/aws-load-balancer-eip-allocations: "43.203.24.203"
+  type: ClusterIP
 
 ---
 

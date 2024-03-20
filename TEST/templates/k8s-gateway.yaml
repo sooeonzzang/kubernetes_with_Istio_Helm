@@ -1,12 +1,14 @@
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: Gateway
 metadata:
   name: k8s-gateway
+  namespace: default
+  annotations:
+    networking.istio.io/service-type: NodePort
 spec:
   gatewayClassName: istio
   listeners:
   - name: default
-    hostname: "*.jjong.shop"
     port: 80
     protocol: HTTP
     name: http
@@ -16,14 +18,15 @@ spec:
 
 ---
 
-apiVersion: gateway.networking.k8s.io/v1beta1
+apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: httproute
+  name: httproute-default
   namespace: default
 spec:
   parentRefs:
   - name: k8s-gateway
+    namespace: default
   rules:
 
   ## for api gateway ##
@@ -86,111 +89,96 @@ spec:
 
   # order-admin
   - matches:
-    - path:
+    - headers:
+      - type: Exact
+        name: sooeon
+        value: zzang
+      path:
         type: PathPrefix
         value: /admin/order
-    filters:
-    - type: RequestHeaderModifier
-      requestHeaderModifier:
-        add:
-        - name: sooeon
-          value: zzang
+    
     backendRefs:
     - name: order-service
       port: 8080
   
   # product-admin
   - matches:
-    - path:
+    - headers:
+      - type: Exact
+        name: sooeon
+        value: zzang
+      path:
         type: PathPrefix
         value: /admin/item
-    filters:
-    - type: RequestHeaderModifier
-      requestHeaderModifier:
-        add:
-        - name: sooeon
-          value: zzang
+    
     backendRefs:
     - name: product-service
       port: 8080
   
   # user-admin
   - matches:
-    - path:
+    - headers:
+      - type: Exact
+        name: sooeon
+        value: zzang
+      path:
         type: PathPrefix
         value: /admin/user
-    filters:
-    - type: RequestHeaderModifier
-      requestHeaderModifier:
-        add:
-        - name: sooeon
-          value: zzang
+      
     backendRefs:
     - name: user-service
       port: 8080
 
-  # # kiali
-  # - matches:
-  #   - path:
-  #       type: PathPrefix
-  #       value: /admin/kiali
-  #   filters:
-  #   - type: RequestHeaderModifier
-  #     requestHeaderModifier:
-  #       add:
-  #       - name: sooeon
-  #         value: zzang
-  #   - type: URLRewrite
-  #     urlRewrite:
-  #       hostname: PODO.MSA.SHOP
-  #       path:
-  #         type: ReplacePrefixMatch
-  #         replacePrefixMatch: /
-  #   backendRefs:
-  #   - name: kiali.istio-system.svc.cluster.local
-  #     port: 20001
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: httproute-monitoring
+  namespace: istio-system
+spec:
+  parentRefs:
+  - name: k8s-gateway
+    namespace: default
+  rules:
 
-  # # grafana
-  # - matches:
-  #   - path:
-  #       type: PathPrefix
-  #       value: /admin/grafana
-  #   filters:
-  #   - type: RequestHeaderModifier
-  #     requestHeaderModifier:
-  #       add:
-  #       - name: sooeon
-  #         value: zzang
-  #   - type: URLRewrite
-  #     urlRewrite:
-  #       hostname: PODO.MSA.SHOP
-  #       path:
-  #         type: ReplacePrefixMatch
-  #         replacePrefixMatch: /
-  #   backendRefs:
-  #   - name: grafana.istio-system.svc.cluster.local
-  #     port: 3000
+  # for monitoring
+  - matches:
+    - headers:
+      - type: Exact
+        name: sooeon
+        value: zzang
+      path:
+        type: PathPrefix
+        value: /
+    backendRefs:
+    - name: grafana
+      port: 3000
+  
+  #kiali
+  - matches:
+    - headers:
+      - type: Exact
+        name: sooeon
+        value: zzang
+      path:
+        type: PathPrefix
+        value: /kiali
+    backendRefs:
+    - name: kiali
+      port: 20001
 
-  # # jaeger
-  # - matches:
-  #   - path:
-  #       type: PathPrefix
-  #       value: /admin/grafana
-  #   filters:
-  #   - type: RequestHeaderModifier
-  #     requestHeaderModifier:
-  #       add:
-  #       - name: sooeon
-  #         value: zzang
-  #   - type: URLRewrite
-  #     urlRewrite:
-  #       hostname: PODO.MSA.SHOP
-  #       path:
-  #         type: ReplacePrefixMatch
-  #         replacePrefixMatch: /
-  #   backendRefs:
-  #   - name: tracing.istio-system.svc.cluster.local
-  #     port: 80
+  #jaeger
+  - matches:
+    - headers:
+      - type: Exact
+        name: sooeon
+        value: zzang
+      path:
+        type: PathPrefix
+        value: /jaeger
+    backendRefs:
+    - name: tracing
+      port: 80
 
 
 
